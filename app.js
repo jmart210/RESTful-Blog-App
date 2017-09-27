@@ -91,6 +91,19 @@ app.put('/blogs/:id', function(req,res){
     })
 });
 
+//Delete Route
+app.delete('/blogs/:id', function(req,res){
+    //destroy blogs
+    Blog.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            res.redirect('/blogs');
+        } else {
+            res.redirect('/blogs');
+        }
+    })
+    //redirect somewhere
+});
+
 app.listen(process.env.PORT || 8000, function(){
     console.log("Listening on port %d in %s mode", this.address().port, app.settings.env);
 });
