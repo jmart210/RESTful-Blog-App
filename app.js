@@ -29,13 +29,30 @@ var Blog = mongoose.model('Blog', blogSchema);
 app.get('/', function(req,res){
     res.redirect('/blogs');
 });
-
+// Index Route
 app.get('/blogs', function(req,res){
     Blog.find({}, function(err, blogs){
         if(err){
             console.log("Error!");
         } else {
             res.render('index', {blogs: blogs});
+        }
+    });
+});
+
+// New Routes which shows new dog form
+app.get('/blogs/new', function(req,res){
+    res.render('new');
+});
+// Create Route, creates blog, then redirects to /blogs
+app.post('/blogs', function(req,res){
+    //create blog
+    Blog.create(req.body.blog, function(err, newBlog){
+        if(err){
+            res.render('new');
+        } else {
+            //then, redirectto the index
+            res.redirect('/blogs');
         }
     });
 });
